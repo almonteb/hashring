@@ -154,8 +154,7 @@ func (h *HashRing) GetNodePos(stringKey string) (pos int, ok bool) {
 }
 
 func (h *HashRing) GenKey(key string) HashKey {
-	bKey := hashDigest(key)
-	return hashVal(bKey[0:4])
+	return GenKey(key)
 }
 
 func (h *HashRing) GetNodes(stringKey string, size int) (nodes []string, ok bool) {
@@ -298,6 +297,11 @@ func (h* HashRing) GetRanges() []RingRange {
 	// include the last node, which wraps around to 0
 	ranges = append(ranges, RingRange{firstNode, lastKey, MaxHashKey})
 	return ranges
+}
+
+func GenKey(key string) HashKey {
+	bKey := hashDigest(key)
+	return hashVal(bKey[0:4])
 }
 
 func hashVal(bKey []byte) HashKey {
